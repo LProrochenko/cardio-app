@@ -1,23 +1,23 @@
 /* Fonts */
 @font-face {
-  font-display: swap; 
-  font-family: 'Roboto';
+  font-display: swap;
+  font-family: "Roboto";
   font-style: normal;
   font-weight: 400;
-  src: url('../fonts/roboto-v32-latin-regular.woff2') format('woff2');
+  src: url("../fonts/roboto-v32-latin-regular.woff2") format("woff2");
 }
 
 @font-face {
   font-display: swap;
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-style: normal;
   font-weight: 500;
-  src: url('../fonts/roboto-v32-latin-500.woff2') format('woff2'); 
+  src: url("../fonts/roboto-v32-latin-500.woff2") format("woff2");
 }
 
 /* Global styles */
 html {
-  font-size: 60%;
+  font-size: 62.5%;
   box-sizing: border-box;
 }
 
@@ -28,11 +28,117 @@ html {
 }
 
 body {
-  font-family: 'Roboto', sans-serif;
-  font-weight: 400;
-  font-size: 1.8rem;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-size: 1.5rem;
   line-height: 1.6rem;
   color: #e8e8e8;
   background-color: #fff;
   height: 100vh;
+  display: flex;
+
+}
+.sidebar {
+  flex-basis: 70rem;
+  padding: 4rem 4rem 3rem 4rem;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.icon {
+  width: 11rem;
+}
+.title {
+  font-size: 2.4rem;
+  margin-bottom: 3rem;
+}
+.form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem 2.5rem;
+  padding: 1.5rem 2.75rem;
+  margin-bottom: 1.75rem;
+  background-color: #3f464d;
+  border-radius: 5px;
+}
+.form__group {
+  display: flex;
+  align-items: center;
+}
+.form__label {
+  flex: 0 0 40%;
+}
+.form__input {
+  width: 100%;
+  padding: 0.3rem 1.1rem;
+  font-family: inherit;
+  font-size: 1.4rem;
+  border: none;
+  border-radius: 3px;
+  line-height: 1.6rem;
+}
+.form__input:focus {
+  outline: none;
+  background-color: #fff;
+}
+select {
+  appearance: none; /* Убираем стандартный стиль */
+  background: url(/img/arrow.svg) no-repeat right 10px center white;
+  background-size: 12px; /* Размер стрелки */
+  padding-right: 30px;
+}
+.workouts {
+  /* list-style: none; */
+  height: 77vh;
+  overflow-y: scroll;
+  margin-bottom: 1rem;
+}
+.workouts::-webkit-scrollbar {
+  width: 0;
+}
+.workout{
+  background-color: #3f464d;
+  border-radius: 5px;
+  padding: 1.5rem 2.25rem;
+  margin-bottom: 1.75rem;
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 0.75rem 1.5rem;
+
+}
+.workout-running {
+  border-left: 5px solid green;
+}
+.workout-cycling {
+  border-left: 5px solid orange;
+}
+.workout__title {
+  grid-column: 1 / -1;
+  margin-bottom: 1rem;
+}
+.workout__details {
+  display: flex;
+  align-items: baseline;
+}
+
+.workout__icon {
+  font-size: 1.8rem;
+  margin-right: 0.2rem;
+  height: 0.28rem;
+}
+
+.workout__value {
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
+}
+
+.workout__unit {
+  font-size: 1.1rem;
+  color: var(--color-light--1);
+  font-weight: 800;
+}
+.hidden {
+  display: none;
 }

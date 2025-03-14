@@ -9,6 +9,163 @@
     <script defer src="./js/main.js"></script>
   </head>
   <body>
-
+    <div class="sidebar">
+      <img src="/img/icon.JPG" alt="Icon" class="icon" />
+      <h1 class="title">Cardio</h1>
+      <div class="workouts">
+        <form class="form">
+          <div class="form__group">
+            <label class="form__label" for="type">Type</label>
+            <select class="form__input" id="type" name="type">
+              <option value="running">Running</option>
+              <option value="cycling">Cycling</option>
+            </select>
+          </div>
+          <div class="form__group">
+            <label class="form__label" for="duration">Duration</label>
+            <input
+              class="form__input"
+              type="number"
+              id="duration"
+              name="duration"
+              placeholder="min"
+              min="1"
+              required
+            />
+          </div>
+          <div class="form__group">
+            <label class="form__label" for="distance">Distance</label>
+            <input
+              class="form__input"
+              type="number"
+              id="distance"
+              name="distance"
+              placeholder="km"
+              min="1"
+              required
+            />
+          </div>
+          <div class="form__group">
+            <label class="form__label" for="speed">Speed</label>
+            <input
+              class="form__input"
+              type="number"
+              id="speed"
+              name="speed"
+              placeholder="step/min"
+              min="1"
+              required
+            />
+          </div>
+          <div class="form__group hidden">
+            <label class="form__label" for="climb">Climb</label>
+            <input
+              class="form__input"
+              type="number"
+              id="climb"
+              name="climb"
+              placeholder="m"
+              min="1"
+              required
+            />
+          </div>
+        </form>
+        <ul class="workouts__list">
+          <li class="workout workout-running" data-id="1234567890">
+            <h2 class="workout__title">Running 15.05.2021</h2>
+            <div class="workout__details">
+              <span class="workout__icon">🏃</span>
+              <span class="workout__value">5.0</span>
+              <span class="workout__unit">km</span>
+            </div>
+            <div class="workout__details">
+              <span class="workout__icon">⏱</span>
+              <span class="workout__value">21</span>
+              <span class="workout__unit">min</span>
+            </div>
+            <div class="workout__details">
+              <span class="workout__icon">📏⏱</span>
+              <span class="workout__value">238</span>
+              <span class="workout__unit">m/min</span>
+            </div>
+            <div class="workout__details">
+              <span class="workout__icon">👟⏱</span>
+              <span class="workout__value">340</span>
+              <span class="workout__unit">step/min</span>
+            </div>
+          </li>
+          <li class="workout workout-cycling" data-id="1234567890">
+            <h2 class="workout__title">Cycling 07.05.2021</h2>
+            <div class="workout__details">
+              <span class="workout__icon">🚵‍♂️</span>
+              <span class="workout__value">25</span>
+              <span class="workout__unit">km</span>
+            </div>
+            <div class="workout__details">
+              <span class="workout__icon">⏱</span>
+              <span class="workout__value">91</span>
+              <span class="workout__unit">min</span>
+            </div>
+            <div class="workout__details">
+              <span class="workout__icon">📏⏱</span>
+              <span class="workout__value">17</span>
+              <span class="workout__unit">km/h</span>
+            </div>
+            <div class="workout__details">
+              <span class="workout__icon">🏔</span>
+              <span class="workout__value">251</span>
+              <span class="workout__unit">m</span>
+            </div>
+          </li>
+          <li class="workout workout-cycling" data-id="1234567890">
+            <h2 class="workout__title">Cycling 07.05.2021</h2>
+            <div class="workout__details">
+              <span class="workout__icon">🚵‍♂️</span>
+              <span class="workout__value">25</span>
+              <span class="workout__unit">km</span>
+            </div>
+            <div class="workout__details">
+              <span class="workout__icon">⏱</span>
+              <span class="workout__value">91</span>
+              <span class="workout__unit">min</span>
+            </div>
+            <div class="workout__details">
+              <span class="workout__icon">📏⏱</span>
+              <span class="workout__value">17</span>
+              <span class="workout__unit">km/h</span>
+            </div>
+            <div class="workout__details">
+              <span class="workout__icon">🏔</span>
+              <span class="workout__value">251</span>
+              <span class="workout__unit">m</span>
+            </div>
+          </li>
+          <li class="workout workout-cycling" data-id="1234567890">
+            <h2 class="workout__title">Cycling 07.05.2021</h2>
+            <div class="workout__details">
+              <span class="workout__icon">🚵‍♂️</span>
+              <span class="workout__value">25</span>
+              <span class="workout__unit">km</span>
+            </div>
+            <div class="workout__details">
+              <span class="workout__icon">⏱</span>
+              <span class="workout__value">91</span>
+              <span class="workout__unit">min</span>
+            </div>
+            <div class="workout__details">
+              <span class="workout__icon">📏⏱</span>
+              <span class="workout__value">17</span>
+              <span class="workout__unit">km/h</span>
+            </div>
+            <div class="workout__details">
+              <span class="workout__icon">🏔</span>
+              <span class="workout__value">251</span>
+              <span class="workout__unit">m</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <p class="footer">RUNNING&CYCLING</p>
+    </div>
   </body>
 </html>
