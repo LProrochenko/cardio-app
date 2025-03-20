@@ -181,6 +181,6 @@ select {
 .running-popup .leaflet-popup-content-wrapper {
   border-left: 5px solid green;
 }
-.cycling-popup {
+.cycling-popup .leaflet-popup-content-wrapper{
   border-left: 5px solid orange;
 }
