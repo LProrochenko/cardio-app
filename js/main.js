@@ -6,6 +6,45 @@ const inputSpeed = document.querySelector('.form__input-speed');
 const inputClimb = document.querySelector('.form__input-climb');
 const inputType = document.querySelector('.form__input-type');
 
+class Workout {
+  date = new Intl.DateTimeFormat(navigator.language).format(new Date());
+  id = crypto.randomUUID().replace(/-/g, '');
+  
+  constructor (coords, distance, duration) {
+    this.coords = coords;
+    this.distance = distance;
+    this.duration = duration;
+  }
+}
+
+class Running extends Workout {
+  constructor (coords, distance, duration, speed) {
+    super (coords, distance, duration);
+    this.speed = speed;
+    this.calculatePace();
+  }
+
+  calculatePace () {
+    this.pace = this.duration / this.distance;
+  }
+}
+class Cycling extends Workout {
+  constructor (coords, distance, duration, climb) {
+    super (coords, distance, duration);
+    this.climb = climb;
+    this.calculateSpeed();
+  }
+
+  calculateSpeed () {
+    this.speed = this.distance / this.duration /60;
+  }
+}
+
+const run = new Running([1,4], 1, 3, 3);
+const cyc = new Cycling ([2,40], 2, 3, 4);
+console.log(run, cyc);
+
+
 class App {
   #map;
   #mapEvent;
