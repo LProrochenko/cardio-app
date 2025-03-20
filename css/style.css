@@ -36,7 +36,6 @@ body {
   background-color: #fff;
   height: 100vh;
   display: flex;
-
 }
 .sidebar {
   flex-basis: 70rem;
@@ -61,7 +60,23 @@ body {
   margin-bottom: 1.75rem;
   background-color: #3f464d;
   border-radius: 5px;
+  height: auto;
+  transition: all 0.5s, transform 1ms;
 }
+.form-hidden {
+  transform: translateY(-30rem);
+  height: 0;
+  padding: 0 2.25rem;
+  margin-bottom: 0;
+  opacity: 0;
+  /* visibility: hidden; */
+}
+/* .form:not(.form-hidden) {
+  height: auto;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+} */
 .form__group {
   display: flex;
   align-items: center;
@@ -89,15 +104,16 @@ select {
   padding-right: 30px;
 }
 .workouts {
-  /* list-style: none; */
+  /* list-style: none;  */
   height: 77vh;
   overflow-y: scroll;
   margin-bottom: 1rem;
+  width: 100%;
 }
 .workouts::-webkit-scrollbar {
   width: 0;
 }
-.workout{
+.workout {
   background-color: #3f464d;
   border-radius: 5px;
   padding: 1.5rem 2.25rem;
@@ -106,7 +122,6 @@ select {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 0.75rem 1.5rem;
-
 }
 .workout-running {
   border-left: 5px solid green;
@@ -139,10 +154,12 @@ select {
   color: var(--color-light--1);
   font-weight: 800;
 }
+
 .hidden {
   display: none;
 }
 #map {
+  flex: 1;
   width: 100%;
   height: 100vh;
 }
@@ -161,7 +178,7 @@ select {
 .leaflet-popup .leaflet-popup-tip {
   background-color: #0a151d;
 }
-.running-popup .leaflet-popup-content-wrapper{
+.running-popup .leaflet-popup-content-wrapper {
   border-left: 5px solid green;
 }
 .cycling-popup {

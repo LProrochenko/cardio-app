@@ -25,30 +25,18 @@
       <img src="/img/icon.JPG" alt="Icon" class="icon" />
       <h1 class="title">Cardio</h1>
       <div class="workouts">
-        <form class="form">
+        <form class="form form-hidden">
           <div class="form__group">
             <label class="form__label" for="type">Type</label>
-            <select class="form__input" id="type" name="type">
+            <select class="form__input form__input-type" id="type" name="type">
               <option value="running">Running</option>
               <option value="cycling">Cycling</option>
             </select>
           </div>
           <div class="form__group">
-            <label class="form__label" for="duration">Duration</label>
-            <input
-              class="form__input"
-              type="number"
-              id="duration"
-              name="duration"
-              placeholder="min"
-              min="1"
-              required
-            />
-          </div>
-          <div class="form__group">
             <label class="form__label" for="distance">Distance</label>
             <input
-              class="form__input"
+              class="form__input form__input-distance"
               type="number"
               id="distance"
               name="distance"
@@ -58,31 +46,43 @@
             />
           </div>
           <div class="form__group">
+            <label class="form__label" for="duration">Duration</label>
+            <input
+              class="form__input form__input-duration"
+              type="number"
+              id="duration"
+              name="duration"
+              placeholder="min"
+              min="1"
+              required
+            />
+          </div>
+          <div class="form__group">
             <label class="form__label" for="speed">Speed</label>
             <input
-              class="form__input"
+              class="form__input form__input-speed"
               type="number"
               id="speed"
               name="speed"
               placeholder="step/min"
               min="1"
-              required
+
             />
           </div>
           <div class="form__group hidden">
             <label class="form__label" for="climb">Climb</label>
             <input
-              class="form__input"
+              class="form__input form__input-climb"
               type="number"
               id="climb"
               name="climb"
               placeholder="m"
               min="1"
-              required
             />
           </div>
+          <button class="hidden">ok</button>
         </form>
-        <ul class="workouts__list">
+        <ul class="workouts__list hidden">
           <li class="workout workout-running" data-id="1234567890">
             <h2 class="workout__title">Running 15.05.2021</h2>
             <div class="workout__details">
