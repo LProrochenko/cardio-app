@@ -82,6 +82,14 @@ class App {
     form.classList.remove('form-hidden');
     inputDistance.focus();
   }
+  _hideForm () {
+    form.classList.add('form-hidden');
+    inputDistance.value =
+    inputDuration.value =
+    inputSpeed.value =
+    inputClimb.value =
+    '';
+  }
 
   _newWorkout(e) {
     e.preventDefault();
@@ -115,13 +123,7 @@ class App {
     }
     this._displayWorkout(workout);
     this._displayWorkoutOnSidebar(workout);
-    console.log(workout);
-
-    inputDistance.value =
-      inputDuration.value =
-      inputSpeed.value =
-      inputClimb.value =
-        '';
+    this._hideForm();
   }
 
   _setDefaultFormState() {
@@ -146,7 +148,7 @@ class App {
           closeOnClick: false,
         })
       )
-      .setPopupContent('training')
+      .setPopupContent(`${workout.type === 'running' ? '🏃' : '🚵‍♂️'} ${workout.type}      ${workout.date}`)
       .openPopup();
   }
   _displayWorkoutOnSidebar(workout) {
