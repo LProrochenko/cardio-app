@@ -1,5 +1,6 @@
 ﻿'use strict';
 const form = document.querySelector('.form');
+const containerWorkouts = document.querySelector('.workouts');
 const inputDistance = document.querySelector('.form__input-distance');
 const inputDuration = document.querySelector('.form__input-duration');
 const inputSpeed = document.querySelector('.form__input-speed');
@@ -26,7 +27,7 @@ class Running extends Workout {
   }
 
   calculatePace() {
-    this.pace = this.duration / this.distance;
+    this.pace = (this.duration / this.distance).toFixed(2);
   }
 }
 class Cycling extends Workout {
@@ -45,12 +46,14 @@ class Cycling extends Workout {
 class App {
   #map;
   #mapEvent;
+  #workouts = [];
 
   constructor() {
     this._getPosition();
     document.addEventListener('DOMContentLoaded', this._setDefaultFormState);
     form.addEventListener('submit', this._newWorkout.bind(this));
     inputType.addEventListener('change', this._toggleClimbField);
+    containerWorkouts.addEventListener('click', this._moveToWorkout.bind(this));
   }
 
   _getPosition(e) {
@@ -121,6 +124,8 @@ class App {
         return alert('Invalid input. Please enter a positive number.');
       workout = new Cycling([lat, lng], distance, duration, climb);
     }
+    this.#workouts.push(workout);
+
     this._displayWorkout(workout);
     this._displayWorkoutOnSidebar(workout);
     this._hideForm();
@@ -199,6 +204,18 @@ class App {
     </ul>`
     }
     form.insertAdjacentHTML('afterend', html);
+  }
+  _moveToWorkout (e) {
+    const workoutElement = e.target.closest('.workout');
+    if (!workoutElement) return;
+    const workout = this.#workouts.find(item => item.id === workoutElement.dataset.id);
+    this.#map.setView(workout.coords, 13, {
+      animate: true,
+      pan: {
+        duration: true,
+      },
+    })
+
   }
 }
 
