@@ -55,8 +55,14 @@ class App {
     form.addEventListener('submit', this._newWorkout.bind(this));
     inputType.addEventListener('change', this._toggleClimbField);
     containerWorkouts.addEventListener('click', this._moveToWorkout.bind(this));
+    this._getLocalStorageData();
   }
-
+  _getLocalStorageData() {
+    const data = JSON.parse(localStorage.getItem('workouts'));
+    if (!data) return;
+    this.#workouts = data;
+    this.#workouts.forEach( workout => -this._displayWorkoutOnSidebar(workout));
+ }
   _getPosition(e) {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -78,6 +84,8 @@ class App {
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(this.#map).on('load', this._stopSpiner.bind(this));
     this.#map.on('click', this._showForm.bind(this));
+
+    this.#workouts.forEach(workout => this._displayWorkout(workout));
   }
 
   _showForm(e) {
@@ -129,8 +137,11 @@ class App {
     this._displayWorkout(workout);
     this._displayWorkoutOnSidebar(workout);
     this._hideForm();
+    this._addWorkoutsToLocalStorage();
   }
-
+  _addWorkoutsToLocalStorage() {
+    localStorage.setItem('workouts', JSON.stringify(this.#workouts));
+  }
   _setDefaultFormState() {
     inputType.value = 'running';
     inputSpeed.closest('.form__group').classList.remove('hidden');
