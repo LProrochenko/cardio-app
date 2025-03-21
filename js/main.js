@@ -1,6 +1,7 @@
 ﻿'use strict';
 const form = document.querySelector('.form');
 const containerWorkouts = document.querySelector('.workouts');
+const loader = document.getElementById('map-loader');
 const inputDistance = document.querySelector('.form__input-distance');
 const inputDuration = document.querySelector('.form__input-duration');
 const inputSpeed = document.querySelector('.form__input-speed');
@@ -75,8 +76,7 @@ class App {
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(this.#map);
-
+    }).addTo(this.#map).on('load', this._stopSpiner.bind(this));
     this.#map.on('click', this._showForm.bind(this));
   }
 
@@ -85,13 +85,13 @@ class App {
     form.classList.remove('form-hidden');
     inputDistance.focus();
   }
-  _hideForm () {
+  _hideForm() {
     form.classList.add('form-hidden');
     inputDistance.value =
-    inputDuration.value =
-    inputSpeed.value =
-    inputClimb.value =
-    '';
+      inputDuration.value =
+      inputSpeed.value =
+      inputClimb.value =
+        '';
   }
 
   _newWorkout(e) {
@@ -136,6 +136,9 @@ class App {
     inputSpeed.closest('.form__group').classList.remove('hidden');
     inputClimb.closest('.form__group').classList.add('hidden');
   }
+  _stopSpiner() {
+    if (loader) loader.style.display = 'none';
+  }
 
   _toggleClimbField() {
     inputClimb.closest('.form__group').classList.toggle('hidden');
@@ -153,7 +156,11 @@ class App {
           closeOnClick: false,
         })
       )
-      .setPopupContent(`${workout.type === 'running' ? '🏃' : '🚵‍♂️'} ${workout.type}      ${workout.date}`)
+      .setPopupContent(
+        `${workout.type === 'running' ? '🏃' : '🚵‍♂️'} ${workout.type}      ${
+          workout.date
+        }`
+      )
       .openPopup();
   }
   _displayWorkoutOnSidebar(workout) {
@@ -201,21 +208,22 @@ class App {
           <span class="workout__unit">m</span>
         </div>
       </li>
-    </ul>`
+    </ul>`;
     }
     form.insertAdjacentHTML('afterend', html);
   }
-  _moveToWorkout (e) {
+  _moveToWorkout(e) {
     const workoutElement = e.target.closest('.workout');
     if (!workoutElement) return;
-    const workout = this.#workouts.find(item => item.id === workoutElement.dataset.id);
+    const workout = this.#workouts.find(
+      item => item.id === workoutElement.dataset.id
+    );
     this.#map.setView(workout.coords, 13, {
       animate: true,
       pan: {
         duration: true,
       },
-    })
-
+    });
   }
 }
 
