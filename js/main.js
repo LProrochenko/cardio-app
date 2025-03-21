@@ -38,10 +38,9 @@ class Cycling extends Workout {
   }
 
   calculateSpeed() {
-    this.speed = this.distance / this.duration / 60;
+    this.velocity = (this.distance / (this.duration / 60)).toFixed(2);
   }
 }
-
 
 class App {
   #map;
@@ -89,29 +88,40 @@ class App {
     const { lat, lng } = this.#mapEvent.latlng;
     let workout;
 
-    const areNumbers = (...numbers) => numbers.every(num => Number.isFinite(num));
-    const areNumbersPositive = (...numbers) => numbers.every(num => num >0);
+    const areNumbers = (...numbers) =>
+      numbers.every(num => Number.isFinite(num));
+    const areNumbersPositive = (...numbers) => numbers.every(num => num > 0);
 
     const type = inputType.value;
     const distance = +inputDistance.value;
-    const duration = +inputDistance.value;
-    if ( type === 'running') {
+    const duration = +inputDuration.value;
+    if (type === 'running') {
       const speed = +inputSpeed.value;
-      if ( !areNumbers (distance, duration, speed) || !areNumbersPositive(distance, duration, speed)) return alert ('Invalid input. Please enter a positive number.');
+      if (
+        !areNumbers(distance, duration, speed) ||
+        !areNumbersPositive(distance, duration, speed)
+      )
+        return alert('Invalid input. Please enter a positive number.');
       workout = new Running([lat, lng], distance, duration, speed);
     }
-    if ( type === 'cycling') {
+    if (type === 'cycling') {
       const climb = +inputClimb.value;
-      if ( !areNumbers (distance, duration, climb) || !areNumbersPositive(distance, duration)) return alert ('Invalid input. Please enter a positive number.');
-      workout = new Cycling ([lat, lng], distance, duration, climb);
+      if (
+        !areNumbers(distance, duration, climb) ||
+        !areNumbersPositive(distance, duration)
+      )
+        return alert('Invalid input. Please enter a positive number.');
+      workout = new Cycling([lat, lng], distance, duration, climb);
     }
     this._displayWorkout(workout);
+    this._displayWorkoutOnSidebar(workout);
+    console.log(workout);
 
     inputDistance.value =
-    inputDuration.value =
-    inputSpeed.value =
-    inputClimb.value =
-    '';
+      inputDuration.value =
+      inputSpeed.value =
+      inputClimb.value =
+        '';
   }
 
   _setDefaultFormState() {
@@ -138,6 +148,55 @@ class App {
       )
       .setPopupContent('training')
       .openPopup();
+  }
+  _displayWorkoutOnSidebar(workout) {
+    let html = `
+    <ul>
+      <li class="workout workout-${workout.type}" data-id="${workout.id}">
+        <h2 class="workout__title">${workout.type} ${workout.date}</h2>
+        <div class="workout__details">
+          <span class="workout__icon">${
+            workout.type === 'running' ? '🏃' : '🚵'
+          }</span>
+          <span class="workout__value">${workout.distance}</span>
+          <span class="workout__unit">km</span>
+        </div>
+        <div class="workout__details">
+          <span class="workout__icon">⏱</span>
+          <span class="workout__value">${workout.duration}</span>
+          <span class="workout__unit">min</span>
+        </div>`;
+    if (workout.type === 'running') {
+      html += `
+        <div class="workout__details">
+          <span class="workout__icon">📏⏱</span>
+          <span class="workout__value">${workout.pace}</span>
+          <span class="workout__unit">min/km</span>
+        </div>
+        <div class="workout__details">
+          <span class="workout__icon">👟⏱</span>
+          <span class="workout__value">${workout.speed}</span>
+          <span class="workout__unit">step/min</span>
+        </div>
+      </li>
+    </ul>`;
+    }
+    if (workout.type === 'cycling') {
+      html += `
+        <div class="workout__details">
+          <span class="workout__icon">📏⏱</span>
+          <span class="workout__value">${workout.velocity}</span>
+          <span class="workout__unit">km/h</span>
+        </div>
+        <div class="workout__details">
+          <span class="workout__icon">🏔</span>
+          <span class="workout__value">${workout.climb}</span>
+          <span class="workout__unit">m</span>
+        </div>
+      </li>
+    </ul>`
+    }
+    form.insertAdjacentHTML('afterend', html);
   }
 }
 
