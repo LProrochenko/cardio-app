@@ -3,6 +3,7 @@ const form = document.querySelector('.form');
 const containerWorkouts = document.querySelector('.workouts');
 const loader = document.getElementById('map-loader');
 const btnReset = document.querySelector('.reset');
+const btnDeleteWorkout = document.querySelector('.delete-workout');
 const inputDistance = document.querySelector('.form__input-distance');
 const inputDuration = document.querySelector('.form__input-duration');
 const inputSpeed = document.querySelector('.form__input-speed');
@@ -58,6 +59,7 @@ class App {
     containerWorkouts.addEventListener('click', this._moveToWorkout.bind(this));
     this._getLocalStorageData();
     btnReset.addEventListener('click', this.reset);
+    containerWorkouts.addEventListener('click', this._deleteWorkout.bind(this));
   }
   _getLocalStorageData() {
     const data = JSON.parse(localStorage.getItem('workouts'));
@@ -181,6 +183,7 @@ class App {
     <ul>
       <li class="workout workout-${workout.type}" data-id="${workout.id}">
         <h2 class="workout__title">${workout.type} ${workout.date}</h2>
+        <button class="delete-workout">×</button>
         <div class="workout__details">
           <span class="workout__icon">${
             workout.type === 'running' ? '🏃' : '🚵'
@@ -227,6 +230,7 @@ class App {
     btnReset.classList.remove('hidden');
   }
   _moveToWorkout(e) {
+    if (!this.#map) return;
     const workoutElement = e.target.closest('.workout');
     if (!workoutElement) return;
     const workout = this.#workouts.find(
@@ -238,6 +242,15 @@ class App {
         duration: true,
       },
     });
+  }
+  _deleteWorkout(e) {
+    if (!e.target.classList.contains('delete-workout')) return;
+     console.log(e);
+     const workoutElement = e.target.closest('.workout');
+    if (!workoutElement) return;
+    this.#workouts = this.#workouts.filter(workout => workout.id !== workoutElement.dataset.id);
+    this._addWorkoutsToLocalStorage();
+    workoutElement.remove();
   }
   reset() {
     localStorage.removeItem('workouts');
