@@ -2,6 +2,7 @@
 const form = document.querySelector('.form');
 const containerWorkouts = document.querySelector('.workouts');
 const loader = document.getElementById('map-loader');
+const btnReset = document.querySelector('.reset');
 const inputDistance = document.querySelector('.form__input-distance');
 const inputDuration = document.querySelector('.form__input-duration');
 const inputSpeed = document.querySelector('.form__input-speed');
@@ -56,6 +57,7 @@ class App {
     inputType.addEventListener('change', this._toggleClimbField);
     containerWorkouts.addEventListener('click', this._moveToWorkout.bind(this));
     this._getLocalStorageData();
+    btnReset.addEventListener('click', this.reset);
   }
   _getLocalStorageData() {
     const data = JSON.parse(localStorage.getItem('workouts'));
@@ -222,6 +224,7 @@ class App {
     </ul>`;
     }
     form.insertAdjacentHTML('afterend', html);
+    btnReset.classList.remove('hidden');
   }
   _moveToWorkout(e) {
     const workoutElement = e.target.closest('.workout');
@@ -235,6 +238,10 @@ class App {
         duration: true,
       },
     });
+  }
+  reset() {
+    localStorage.removeItem('workouts');
+    location.reload();
   }
 }
 

@@ -158,6 +158,25 @@ select {
 .hidden {
   display: none;
 }
+.reset {
+  margin-bottom: 2rem;
+  font-family: inherit;
+  font-weight: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  padding: 0.3rem 1.1rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.reset:focus,
+.reset:hover,
+.reset:active{
+  background-color: #ff4d4d;
+  color: white;
+  border: 2px solid #cc0000; 
+  transition: all 0.5s ease; 
+  outline: none;
+}
 #map {
   flex: 1;
   width: 100%;
