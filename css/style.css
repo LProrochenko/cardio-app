@@ -34,71 +34,68 @@ body {
   line-height: 1.6rem;
   color: #e8e8e8;
   background-color: #fff;
-  /* height: 100vh;
-  display: flex; */
 }
 
+/* Layout - Grid wrapper */
 .wrapper {
   height: 100vh;
   background-color: black;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  /* display: flex; */
-  /* align-items: center; */
-  /* flex-direction: column; */
+  grid-template-columns: repeat(2, 1fr);
   position: relative;
 }
+
 .sidebar {
   padding: 15rem 0 10rem 0;
 }
+
 .header {
   padding-top: 4rem;
   position: absolute;
   left: 0rem;
   top: 0;
-  display: inline-block;
   width: 50%;
   text-align: center;
 }
+
 .icon {
   width: 11rem;
 }
+
 .title {
   font-size: 2.4rem;
   margin-bottom: 3rem;
 }
+
+/* Form styles */
 .form {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, 1fr);
   gap: 1rem 2.5rem;
   padding: 1.5rem 2.75rem;
   margin-bottom: 1.75rem;
   background-color: #3f464d;
   border-radius: 5px;
-  height: auto;
   transition: all 0.5s, transform 1ms;
 }
+
 .form-hidden {
   transform: translateY(-30rem);
   height: 0;
   padding: 0 2.25rem;
   margin-bottom: 0;
   opacity: 0;
-  /* visibility: hidden; */
 }
-/* .form:not(.form-hidden) {
-  height: auto;
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-} */
+
 .form__group {
   display: flex;
   align-items: center;
 }
+
 .form__label {
   flex: 0 0 40%;
 }
+
 .form__input {
   width: 100%;
   padding: 0.3rem 1.1rem;
@@ -112,23 +109,26 @@ body {
   outline: none;
   background-color: #fff;
 }
+
 select {
-  appearance: none; /* Убираем стандартный стиль */
+  appearance: none;
   background: url(/img/arrow.svg) no-repeat right 1rem center white;
-  background-size: 1.2rem; /* Размер стрелки */
+  background-size: 1.2rem;
   padding-right: 3rem;
 }
+
+/* Workouts section */
 .workouts {
   padding: 0 3rem 0 4rem;
-  /* list-style: none;  */
   height: 57vh;
-  overflow-y: scroll;
-  /* margin-bottom: 1rem; */
+  overflow-y: auto;
   width: 100%;
 }
+
 .workouts::-webkit-scrollbar {
   width: 0;
 }
+
 .workout {
   background-color: #3f464d;
   border-radius: 5px;
@@ -137,27 +137,29 @@ select {
   cursor: pointer;
   display: grid;
   grid-template-columns: 0.8fr 0.8fr 1.2fr 1.2fr;
-  gap: 0.75rem 1.5rem;
+  gap: 0.75rem 0.75rem;
 }
+
 .workout-running {
   border-left: 5px solid green;
-  position: relative;
 }
+
 .workout-cycling {
   border-left: 5px solid orange;
-  position: relative;
 }
+
 .workout__title {
   grid-column: 1 / -1;
   margin-bottom: 1rem;
 }
+
 .workout__details {
   display: flex;
   align-items: baseline;
 }
 
 .workout__icon {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   margin-right: 0.2rem;
   height: 0.28rem;
 }
@@ -176,6 +178,7 @@ select {
 .hidden {
   display: none;
 }
+
 .footer {
   position: absolute;
   left: 0;
@@ -185,6 +188,8 @@ select {
   text-align: center;
   padding-bottom: 2rem;
 }
+
+/* Buttons and interaction */
 .reset {
   margin-bottom: 2rem;
   font-family: inherit;
@@ -196,6 +201,7 @@ select {
   color: black;
   cursor: pointer;
 }
+
 .reset:focus,
 .reset:hover,
 .reset:active {
@@ -205,6 +211,7 @@ select {
   transition: all 0.5s ease;
   outline: none;
 }
+
 .delete-workout {
   position: absolute;
   top: 0.8rem;
@@ -215,13 +222,8 @@ select {
   background: none;
   cursor: pointer;
 }
-#map {
-  /* flex: 1; */
-  width: 100%;
-  height: 100vh;
-  background-color: rgb(170, 170, 170);
-  position: relative;
-}
+
+/* Loader animation */
 .loader {
   position: absolute;
   top: 50%;
@@ -245,6 +247,14 @@ select {
   }
 }
 
+/* Map */
+#map {
+  width: 100%;
+  height: 100vh;
+  background-color: rgb(170, 170, 170);
+  position: relative;
+}
+
 /* Popup width is defined in JS using options */
 .leaflet-popup .leaflet-popup-content-wrapper {
   background-color: #0a151d;
@@ -260,35 +270,36 @@ select {
 .leaflet-popup .leaflet-popup-tip {
   background-color: #0a151d;
 }
+
 .running-popup .leaflet-popup-content-wrapper {
   border-left: 5px solid green;
 }
+
 .cycling-popup .leaflet-popup-content-wrapper {
   border-left: 5px solid orange;
 }
 
 /* Media starts */
-@media (min-width: 768px) and (max-width: 1024px) {
+@media (max-width: 1040px) {
   .form {
     grid-template-columns: 1fr;
   }
+
   .workout {
     padding: 1.5rem;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 }
+
 @media (max-width: 767px) {
   .wrapper {
-    height: initial;
+    height: auto;
     grid-template-columns: 1fr;
   }
   .sidebar {
     order: 2;
     width: 100%;
     padding: 2rem 2rem 7rem 2rem;
-  }
-  .workouts {
-    height: 57vh;
   }
   .header {
     padding: 2rem 0;
@@ -317,7 +328,6 @@ select {
     gap: 0.5rem;
     margin-bottom: 1rem;
   }
-
   .workout {
     grid-template-columns: 0.7fr 0.7fr 1.3fr 1.3fr;
     padding: 1rem;
@@ -330,43 +340,43 @@ select {
     padding-bottom: 1rem;
   }
 }
+
 @media (max-width: 560px) {
   .form {
     font-size: 1.4rem;
   }
   .workout {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
     font-size: 1.4rem;
   }
   .workout__value {
     font-size: 1.4rem;
   }
+}
 
-  @media (max-width: 480px) {
-    .sidebar {
-      padding: 1rem 1.5rem 7rem 1.5rem;
-    }
-    .form__label {
-      flex: 0 0 35%;
-      margin-right: 0.3rem;
-    }
-    .form__input {
-      font-size: 1.2rem;
-      padding: 0.3rem 0.7rem;
-    }
-    select {
-      background-position: right 0.7rem center;
-      background-size: 1rem;
-    }
-    .workouts {
-      padding: 0;
-    }
-    .workout {
-      gap: 0.75rem;
-      padding: 0.75rem;
-    }
-    .workout__icon {
-      font-size: 1.4rem;
-    }
+@media (max-width: 480px) {
+  .sidebar {
+    padding: 1rem 1.5rem 7rem 1.5rem;
+  }
+  .form__label {
+    flex: 0 0 35%;
+    margin-right: 0.3rem;
+  }
+  .form__input {
+    font-size: 1.2rem;
+    padding: 0.3rem 0.7rem;
+  }
+  select {
+    background-position: right 0.7rem center;
+    background-size: 1rem;
+  }
+  .workouts {
+    padding: 0;
+  }
+  .workout {
+    padding: 0.75rem;
+  }
+  .workout__icon {
+    font-size: 1.4rem;
   }
 }
