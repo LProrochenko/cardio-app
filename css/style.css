@@ -34,16 +34,31 @@ body {
   line-height: 1.6rem;
   color: #e8e8e8;
   background-color: #fff;
+  /* height: 100vh;
+  display: flex; */
+}
+
+.wrapper {
   height: 100vh;
-  display: flex;
+  background-color: black;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  /* display: flex; */
+  /* align-items: center; */
+  /* flex-direction: column; */
+  position: relative;
 }
 .sidebar {
-  flex-basis: 70rem;
-  padding: 4rem 4rem 3rem 4rem;
-  background-color: black;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
+  padding: 15rem 0 10rem 0;
+}
+.header {
+  padding-top: 4rem;
+  position: absolute;
+  left: 0rem;
+  top: 0;
+  display: inline-block;
+  width: 50%;
+  text-align: center;
 }
 .icon {
   width: 11rem;
@@ -99,15 +114,16 @@ body {
 }
 select {
   appearance: none; /* Убираем стандартный стиль */
-  background: url(/img/arrow.svg) no-repeat right 10px center white;
-  background-size: 12px; /* Размер стрелки */
-  padding-right: 30px;
+  background: url(/img/arrow.svg) no-repeat right 1rem center white;
+  background-size: 1.2rem; /* Размер стрелки */
+  padding-right: 3rem;
 }
 .workouts {
+  padding: 0 3rem 0 4rem;
   /* list-style: none;  */
-  height: 77vh;
+  height: 57vh;
   overflow-y: scroll;
-  margin-bottom: 1rem;
+  /* margin-bottom: 1rem; */
   width: 100%;
 }
 .workouts::-webkit-scrollbar {
@@ -120,7 +136,7 @@ select {
   margin-bottom: 1.75rem;
   cursor: pointer;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 0.8fr 0.8fr 1.2fr 1.2fr;
   gap: 0.75rem 1.5rem;
 }
 .workout-running {
@@ -160,6 +176,15 @@ select {
 .hidden {
   display: none;
 }
+.footer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  display: inline-block;
+  width: 50%;
+  text-align: center;
+  padding-bottom: 2rem;
+}
 .reset {
   margin-bottom: 2rem;
   font-family: inherit;
@@ -191,9 +216,9 @@ select {
   cursor: pointer;
 }
 #map {
-  flex: 1;
+  /* flex: 1; */
   width: 100%;
-  height: 100vh;
+  height: 100%;
   background-color: rgb(170, 170, 170);
   position: relative;
 }
@@ -243,27 +268,31 @@ select {
 }
 
 /* Media starts */
-@media (max-width: 1024px) {
-  .sidebar {
-    flex-basis: 50rem;
-    padding: 3rem;
-  }
+@media (min-width: 768px) and (max-width: 1024px) {
   .form {
     grid-template-columns: 1fr;
   }
   .workout {
+    padding: 1.5rem;
     grid-template-columns: 1fr 1fr;
   }
 }
-@media (max-width: 768px) {
-  body {
-    flex-direction: column;
+@media (max-width: 767px) {
+  .wrapper {
+    height: initial;
+    grid-template-columns: 1fr;
   }
   .sidebar {
-    height: 60vh;
-    flex-basis: auto;
+    order: 2;
     width: 100%;
-    padding: 2rem;
+    padding: 2rem 2rem 7rem 2rem;
+  }
+  .workouts {
+    height: 57vh;
+  }
+  .header {
+    padding: 2rem 0;
+    width: 100%;
   }
   .icon {
     width: 6rem;
@@ -276,28 +305,38 @@ select {
     margin-bottom: 1rem;
     font-size: 1.4rem;
   }
+  .wrapper-map {
+    padding: 8rem 2rem 0 2rem;
+  }
   #map {
-    height: 40vh;
+    height: 30vh;
+    order: 1;
   }
   .form {
     padding: 1rem;
     gap: 0.5rem;
+    margin-bottom: 1rem;
   }
+
   .workout {
-    grid-template-columns: 0.9fr 0.9fr 1.1fr 1.1fr;
+    grid-template-columns: 0.7fr 0.7fr 1.3fr 1.3fr;
     padding: 1rem;
-    
+    margin-bottom: 1rem;
+    gap: 0.75rem;
   }
-   .footer {
+  .footer {
+    font-size: 1.4rem;
+    width: 100%;
+    padding-bottom: 1rem;
+  }
+}
+@media (max-width: 560px) {
+  .form {
     font-size: 1.4rem;
   }
-  @media (max-width: 560px) {
-    .form {
-      font-size: 1.4rem;
-    }
-    .workout {
-      grid-template-columns: 1fr 1fr;
-      font-size: 1.4rem;
+  .workout {
+    grid-template-columns: 1fr 1fr;
+    font-size: 1.4rem;
   }
   .workout__value {
     font-size: 1.4rem;
@@ -305,16 +344,29 @@ select {
 
   @media (max-width: 480px) {
     .sidebar {
-      padding: 1.5rem;
+      padding: 1rem 1.5rem 7rem 1.5rem;
     }
     .form__label {
       flex: 0 0 35%;
+      margin-right: 0.3rem;
     }
     .form__input {
       font-size: 1.2rem;
+      padding: 0.3rem 0.7rem;
+    }
+    select {
+      background-position: right 0.7rem center;
+      background-size: 1rem;
+    }
+    .workouts {
+      padding: 0;
     }
     .workout {
+      gap: 0.75rem;
       padding: 0.75rem;
+    }
+    .workout__icon {
+      font-size: 1.4rem;
     }
   }
 }
