@@ -3,182 +3,140 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- External Stylesheets -->
     <link rel="stylesheet" href="./css/reset.css" />
     <link rel="stylesheet" href="./css/style.css" />
+
     <title>Cardio Application</title>
+
+    <!-- Leaflet CSS for map rendering -->
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
       integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
       crossorigin=""
     />
+
+    <!-- Leaflet JS Library -->
     <script
       defer
       src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
       integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
       crossorigin=""
     ></script>
+
+    <!-- Main JavaScript file -->
     <script defer src="./js/main.js"></script>
   </head>
   <body>
     <div class="wrapper">
+      <!-- Sidebar for workouts and form -->
       <div class="sidebar">
-      <header class="header">
-        <img src="/img/icon.JPG" alt="Icon" class="icon" />
-        <h1 class="title">Cardio</h1>
-      </header>
-      <div class="workouts">
-        <form class="form form-hidden">
-          <div class="form__group">
-            <label class="form__label" for="type">Type</label>
-            <select class="form__input form__input-type" id="type" name="type">
-              <option value="running">Running</option>
-              <option value="cycling">Cycling</option>
-            </select>
-          </div>
-          <div class="form__group">
-            <label class="form__label" for="distance">Distance</label>
-            <input
-              class="form__input form__input-distance"
-              id="distance"
-              name="distance"
-              placeholder="km"
-            />
-          </div>
-          <div class="form__group">
-            <label class="form__label" for="duration">Duration</label>
-            <input
-              class="form__input form__input-duration"
-              id="duration"
-              name="duration"
-              placeholder="min"
-            />
-          </div>
-          <div class="form__group">
-            <label class="form__label" for="speed">Speed</label>
-            <input
-              class="form__input form__input-speed"
-              id="speed"
-              name="speed"
-              placeholder="step/min"
-            />
-          </div>
-          <div class="form__group hidden">
-            <label class="form__label" for="climb">Climb</label>
-            <input
-              class="form__input form__input-climb"
-              id="climb"
-              name="climb"
-              placeholder="m"
-            />
-          </div>
-          <button class="hidden">ok</button>
-        </form>
-        <ul class="workouts__list hidden">
-          <li class="workout workout-running" data-id="1234567890">
-            <h2 class="workout__title">Running 15.05.2021</h2>
-            <div class="workout__details">
-              <span class="workout__icon">🏃</span>
-              <span class="workout__value">5.0</span>
-              <span class="workout__unit">km</span>
+        <header class="header">
+          <img src="/img/icon.JPG" alt="Icon" class="icon" />
+          <h1 class="title">Cardio</h1>
+        </header>
+
+        <div class="workouts">
+          <!-- Workout Form (Hidden by default) -->
+          <form class="form form-hidden">
+            <!-- Workout Type Selection -->
+            <div class="form__group">
+              <label class="form__label" for="type">Type</label>
+              <select
+                class="form__input form__input-type"
+                id="type"
+                name="type"
+              >
+                <option value="running">Running</option>
+                <option value="cycling">Cycling</option>
+              </select>
             </div>
-            <div class="workout__details">
-              <span class="workout__icon">⏱</span>
-              <span class="workout__value">21</span>
-              <span class="workout__unit">min</span>
+
+            <!-- Workout Details Inputs -->
+            <div class="form__group">
+              <label class="form__label" for="distance">Distance</label>
+              <input
+                class="form__input form__input-distance"
+                id="distance"
+                name="distance"
+                placeholder="km"
+              />
             </div>
-            <div class="workout__details">
-              <span class="workout__icon">📏⏱</span>
-              <span class="workout__value">238</span>
-              <span class="workout__unit">m/min</span>
+            <div class="form__group">
+              <label class="form__label" for="duration">Duration</label>
+              <input
+                class="form__input form__input-duration"
+                id="duration"
+                name="duration"
+                placeholder="min"
+              />
             </div>
-            <div class="workout__details">
-              <span class="workout__icon">👟⏱</span>
-              <span class="workout__value">340</span>
-              <span class="workout__unit">step/min</span>
+            <div class="form__group">
+              <label class="form__label" for="speed">Speed</label>
+              <input
+                class="form__input form__input-speed"
+                id="speed"
+                name="speed"
+                placeholder="step/min"
+              />
             </div>
-          </li>
-          <li class="workout workout-cycling" data-id="1234567890">
-            <h2 class="workout__title">Cycling 07.05.2021</h2>
-            <div class="workout__details">
-              <span class="workout__icon">🚵‍♂️</span>
-              <span class="workout__value">25</span>
-              <span class="workout__unit">km</span>
+            <div class="form__group hidden">
+              <label class="form__label" for="climb">Climb</label>
+              <input
+                class="form__input form__input-climb"
+                id="climb"
+                name="climb"
+                placeholder="m"
+              />
             </div>
-            <div class="workout__details">
-              <span class="workout__icon">⏱</span>
-              <span class="workout__value">91</span>
-              <span class="workout__unit">min</span>
-            </div>
-            <div class="workout__details">
-              <span class="workout__icon">📏⏱</span>
-              <span class="workout__value">17</span>
-              <span class="workout__unit">km/h</span>
-            </div>
-            <div class="workout__details">
-              <span class="workout__icon">🏔</span>
-              <span class="workout__value">251</span>
-              <span class="workout__unit">m</span>
-            </div>
-          </li>
-          <li class="workout workout-cycling" data-id="1234567890">
-            <h2 class="workout__title">Cycling 07.05.2021</h2>
-            <div class="workout__details">
-              <span class="workout__icon">🚵‍♂️</span>
-              <span class="workout__value">25</span>
-              <span class="workout__unit">km</span>
-            </div>
-            <div class="workout__details">
-              <span class="workout__icon">⏱</span>
-              <span class="workout__value">91</span>
-              <span class="workout__unit">min</span>
-            </div>
-            <div class="workout__details">
-              <span class="workout__icon">📏⏱</span>
-              <span class="workout__value">17</span>
-              <span class="workout__unit">km/h</span>
-            </div>
-            <div class="workout__details">
-              <span class="workout__icon">🏔</span>
-              <span class="workout__value">251</span>
-              <span class="workout__unit">m</span>
-            </div>
-          </li>
-          <li class="workout workout-cycling" data-id="1234567890">
-            <h2 class="workout__title">Cycling 07.05.2021</h2>
-            <div class="workout__details">
-              <span class="workout__icon">🚵‍♂️</span>
-              <span class="workout__value">25</span>
-              <span class="workout__unit">km</span>
-            </div>
-            <div class="workout__details">
-              <span class="workout__icon">⏱</span>
-              <span class="workout__value">91</span>
-              <span class="workout__unit">min</span>
-            </div>
-            <div class="workout__details">
-              <span class="workout__icon">📏⏱</span>
-              <span class="workout__value">17</span>
-              <span class="workout__unit">km/h</span>
-            </div>
-            <div class="workout__details">
-              <span class="workout__icon">🏔</span>
-              <span class="workout__value">251</span>
-              <span class="workout__unit">m</span>
-            </div>
-          </li>
-        </ul>
+            
+            <button class="hidden">ok</button>
+          </form>
+
+          <!-- List of Workouts (Hidden by default) -->
+          <ul class="workouts__list hidden">
+            <!-- Example Workout Items (Replace with dynamic content) -->
+            <li class="workout workout-running" data-id="1234567890">
+              <h2 class="workout__title">Running 15.05.2021</h2>
+              <div class="workout__details">
+                <span class="workout__icon">🏃</span>
+                <span class="workout__value">5.0</span>
+                <span class="workout__unit">km</span>
+              </div>
+              <div class="workout__details">
+                <span class="workout__icon">⏱</span>
+                <span class="workout__value">21</span>
+                <span class="workout__unit">min</span>
+              </div>
+              <div class="workout__details">
+                <span class="workout__icon">📏⏱</span>
+                <span class="workout__value">238</span>
+                <span class="workout__unit">m/min</span>
+              </div>
+              <div class="workout__details">
+                <span class="workout__icon">👟⏱</span>
+                <span class="workout__value">340</span>
+                <span class="workout__unit">step/min</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Sidebar Footer with Reset Button -->
+        <footer class="footer">
+          <button class="reset hidden">Reset Workouts</button>
+          <p class="footer-text">RUNNING&CYCLING</p>
+        </footer>
       </div>
-      <footer class="footer">
-        <button class="reset hidden">Reset Workouts</button>
-        <p class="footer-text">RUNNING&CYCLING</p>
-      </footer>
-    </div>
-    <div class="wrapper-map">
-            <div id="map" class="map">
-        <div id="map-loader" class="loader"></div>
+
+      <!-- Main Map Container -->
+      <div class="wrapper-map">
+        <div id="map" class="map">
+          <div id="map-loader" class="loader"></div>
+        </div>
       </div>
-    </div>
     </div>
   </body>
 </html>
