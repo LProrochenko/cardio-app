@@ -10,6 +10,7 @@ const inputSpeed = document.querySelector('.form__input-speed');
 const inputClimb = document.querySelector('.form__input-climb');
 const inputType = document.querySelector('.form__input-type');
 
+// Base class for workout types
 class Workout {
   date = new Intl.DateTimeFormat(navigator.language).format(new Date());
   id = crypto.randomUUID().replace(/-/g, '');
@@ -21,6 +22,7 @@ class Workout {
   }
 }
 
+// Running workout class with a custom method to calculate pace
 class Running extends Workout {
   type = 'running';
   constructor(coords, distance, duration, speed) {
@@ -33,6 +35,8 @@ class Running extends Workout {
     this.pace = (this.duration / this.distance).toFixed(2);
   }
 }
+
+// Cycling workout class with a custom method to calculate speed
 class Cycling extends Workout {
   type = 'cycling';
   constructor(coords, distance, duration, climb) {
@@ -46,6 +50,7 @@ class Cycling extends Workout {
   }
 }
 
+// Main application class
 class App {
   #map;
   #mapEvent;
@@ -67,7 +72,7 @@ class App {
     const data = JSON.parse(localStorage.getItem('workouts'));
     if (!data) return;
     this.#workouts = data;
-    this.#workouts.forEach(workout => -this._displayWorkoutOnSidebar(workout));
+    this.#workouts.forEach(workout => this._displayWorkoutOnSidebar(workout));
   }
 
   _getPosition(e) {
@@ -82,6 +87,8 @@ class App {
   }
 
   _loadMap(position) {
+    if (!position || !position.coords) return;
+
     const { latitude, longitude } = position.coords;
 
     this.#map = L.map('map').setView([latitude, longitude], 13);
@@ -92,8 +99,8 @@ class App {
     })
       .addTo(this.#map)
       .on('load', this._stopSpiner.bind(this));
-    this.#map.on('click', this._showForm.bind(this));
 
+    this.#map.on('click', this._showForm.bind(this));
     this.#workouts.forEach(workout => this._displayWorkout(workout));
   }
 
@@ -124,15 +131,19 @@ class App {
     const type = inputType.value;
     const distance = +inputDistance.value;
     const duration = +inputDuration.value;
+
     if (type === 'running') {
       const speed = +inputSpeed.value;
+
       if (
         !areNumbers(distance, duration, speed) ||
         !areNumbersPositive(distance, duration, speed)
       )
         return alert('Invalid input. Please enter a positive number.');
+
       workout = new Running([lat, lng], distance, duration, speed);
     }
+
     if (type === 'cycling') {
       const climb = +inputClimb.value;
       if (
@@ -149,6 +160,7 @@ class App {
     this._hideForm();
     this._addWorkoutsToLocalStorage();
   }
+
   _addWorkoutsToLocalStorage() {
     localStorage.setItem('workouts', JSON.stringify(this.#workouts));
   }
@@ -169,6 +181,9 @@ class App {
   }
 
   _displayWorkout(workout) {
+    if (!workout) return;
+
+    // Create a marker with a popup
     const marker = L.marker(workout.coords)
       .addTo(this.#map)
       .bindPopup(
@@ -187,10 +202,11 @@ class App {
       )
       .openPopup();
 
+    // Add marker to the layer group and store its ID
     this.#markers.addLayer(marker);
     workout.markerID = this.#markers.getLayerId(marker);
   }
-  
+
   _displayWorkoutOnSidebar(workout) {
     let html = `
     <ul>
@@ -261,22 +277,23 @@ class App {
   _deleteWorkout(e) {
     if (!e.target.classList.contains('delete-workout')) return;
 
+    // Find the closest workout element
     const workoutElement = e.target.closest('.workout');
-
     if (!workoutElement) return;
 
     const workoutId = workoutElement.dataset.id;
-    const workoutMarkerID = this.#workouts.find(
-      workout => workout.id === workoutId
-    ).markerID;
+    const workout = this.#workouts.find(w => w.id === workoutId);
+    if (!workout) return;
 
-    let marker = this.#markers.getLayer(workoutMarkerID);
-    
-    if (!marker) return;
-    this.#map.removeLayer(marker);
+    // Retrieve marker ID and remove marker from the map if it exists
+    const workoutMarkerID = workout.markerID;
+    if (workoutMarkerID && this.#markers.hasLayer(workoutMarkerID)) {
+      this.#map.removeLayer(this.#markers.getLayer(workoutMarkerID));
+    }
 
+    // Remove workout from sidebar and list
     workoutElement.remove();
-    this.#workouts = this.#workouts.filter(workout => workout.id !== workoutId);
+    this.#workouts = this.#workouts.filter(w => w.id !== workoutId);
     this._addWorkoutsToLocalStorage();
   }
 
