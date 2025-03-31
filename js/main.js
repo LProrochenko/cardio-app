@@ -50,6 +50,7 @@ class App {
   #map;
   #mapEvent;
   #workouts = [];
+  #markers = L.layerGroup();
 
   constructor() {
     this._getPosition();
@@ -61,12 +62,14 @@ class App {
     btnReset.addEventListener('click', this.reset);
     containerWorkouts.addEventListener('click', this._deleteWorkout.bind(this));
   }
+
   _getLocalStorageData() {
     const data = JSON.parse(localStorage.getItem('workouts'));
     if (!data) return;
     this.#workouts = data;
-    this.#workouts.forEach( workout => -this._displayWorkoutOnSidebar(workout));
- }
+    this.#workouts.forEach(workout => -this._displayWorkoutOnSidebar(workout));
+  }
+
   _getPosition(e) {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -86,7 +89,9 @@ class App {
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(this.#map).on('load', this._stopSpiner.bind(this));
+    })
+      .addTo(this.#map)
+      .on('load', this._stopSpiner.bind(this));
     this.#map.on('click', this._showForm.bind(this));
 
     this.#workouts.forEach(workout => this._displayWorkout(workout));
@@ -97,6 +102,7 @@ class App {
     form.classList.remove('form-hidden');
     inputDistance.focus();
   }
+
   _hideForm() {
     form.classList.add('form-hidden');
     inputDistance.value =
@@ -146,11 +152,13 @@ class App {
   _addWorkoutsToLocalStorage() {
     localStorage.setItem('workouts', JSON.stringify(this.#workouts));
   }
+
   _setDefaultFormState() {
     inputType.value = 'running';
     inputSpeed.closest('.form__group').classList.remove('hidden');
     inputClimb.closest('.form__group').classList.add('hidden');
   }
+
   _stopSpiner() {
     if (loader) loader.style.display = 'none';
   }
@@ -159,8 +167,9 @@ class App {
     inputClimb.closest('.form__group').classList.toggle('hidden');
     inputSpeed.closest('.form__group').classList.toggle('hidden');
   }
+
   _displayWorkout(workout) {
-    L.marker(workout.coords)
+    const marker = L.marker(workout.coords)
       .addTo(this.#map)
       .bindPopup(
         L.popup({
@@ -177,7 +186,11 @@ class App {
         }`
       )
       .openPopup();
+
+    this.#markers.addLayer(marker);
+    workout.markerID = this.#markers.getLayerId(marker);
   }
+  
   _displayWorkoutOnSidebar(workout) {
     let html = `
     <ul>
@@ -229,6 +242,7 @@ class App {
     form.insertAdjacentHTML('afterend', html);
     btnReset.classList.remove('hidden');
   }
+
   _moveToWorkout(e) {
     if (!this.#map) return;
     const workoutElement = e.target.closest('.workout');
@@ -243,15 +257,29 @@ class App {
       },
     });
   }
+
   _deleteWorkout(e) {
     if (!e.target.classList.contains('delete-workout')) return;
-     console.log(e);
-     const workoutElement = e.target.closest('.workout');
+
+    const workoutElement = e.target.closest('.workout');
+
     if (!workoutElement) return;
-    this.#workouts = this.#workouts.filter(workout => workout.id !== workoutElement.dataset.id);
-    this._addWorkoutsToLocalStorage();
+
+    const workoutId = workoutElement.dataset.id;
+    const workoutMarkerID = this.#workouts.find(
+      workout => workout.id === workoutId
+    ).markerID;
+
+    let marker = this.#markers.getLayer(workoutMarkerID);
+    
+    if (!marker) return;
+    this.#map.removeLayer(marker);
+
     workoutElement.remove();
+    this.#workouts = this.#workouts.filter(workout => workout.id !== workoutId);
+    this._addWorkoutsToLocalStorage();
   }
+
   reset() {
     localStorage.removeItem('workouts');
     location.reload();
