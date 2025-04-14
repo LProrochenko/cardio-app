@@ -75,14 +75,26 @@ class App {
     this.#workouts.forEach(workout => this._displayWorkoutOnSidebar(workout));
   }
 
-  _getPosition(e) {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        this._loadMap.bind(this),
-        function () {
-          alert('Failed to retrieve location');
-        }
-      );
+  // _getPosition(e) {
+  //   if (navigator.geolocation) {
+  //     new Promise((resolve, reject) =>
+  //       navigator.geolocation.getCurrentPosition(resolve, reject)
+  //     )
+  //       .then(this._loadMap.bind(this))
+  //       .catch(() => alert('Failed to retrieve location'));
+  //   }
+  // }
+
+  async _getPosition(e) {
+    try {
+      if (navigator.geolocation) {
+        const position = await new Promise((resolve, reject) =>
+          navigator.geolocation.getCurrentPosition(resolve, reject)
+        );
+        this._loadMap(position);
+      }
+    } catch (error) {
+      alert('Failed to retrieve location');
     }
   }
 
