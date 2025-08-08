@@ -1,18 +1,18 @@
 /* Fonts */
 @font-face {
   font-display: swap;
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-style: normal;
   font-weight: 400;
-  src: url("../fonts/roboto-v32-latin-regular.woff2") format("woff2");
+  src: url('../fonts/roboto-v32-latin-regular.woff2') format('woff2');
 }
 
 @font-face {
   font-display: swap;
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-style: normal;
   font-weight: 500;
-  src: url("../fonts/roboto-v32-latin-500.woff2") format("woff2");
+  src: url('../fonts/roboto-v32-latin-500.woff2') format('woff2');
 }
 
 /* Global styles */
@@ -28,7 +28,7 @@ html {
 }
 
 body {
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: 500;
   font-size: 1.5rem;
   line-height: 1.6rem;
@@ -110,10 +110,10 @@ body {
   background-color: #fff;
 }
 
-select {
+.form__input-type {
   color: black;
   appearance: none;
-  background: url(/img/arrow.svg) no-repeat right 1rem center white;
+  background: url(../img/arrow.svg) no-repeat right 1rem center white;
   background-size: 1.2rem;
   padding-right: 3rem;
 }
@@ -368,7 +368,7 @@ select {
     font-size: 1.2rem;
     padding: 0.3rem 0.7rem;
   }
-  select {
+  .form__input-type {
     background-position: right 0.7rem center;
     background-size: 1rem;
   }
@@ -381,4 +381,8 @@ select {
   .workout__icon {
     font-size: 1.4rem;
   }
+}
+
+.form__input-type option {
+  width: 1000px;
 }
